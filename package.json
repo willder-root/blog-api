@@ -20,11 +20,13 @@
   "homepage": "https://github.com/willder-root/blog-api#readme",
   "description": "",
   "devDependencies": {
+    "@types/express": "^5.0.3",
     "ts-node-dev": "^2.0.0",
     "typescript": "^5.8.3"
   },
   "dependencies": {
     "dotenv": "^17.2.1",
+    "express": "^5.1.0",
     "mongodb": "^6.18.0",
     "mongoose": "^8.16.5"
   }
