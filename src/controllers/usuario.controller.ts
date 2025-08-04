@@ -6,7 +6,15 @@ class UsuarioController {
   static async getUsuarios(req: Request, res: Response) {
     try {
       const { email, username } = req.query;
-      const usuarios = await Usuario.find({ email, username });
+      const params: any = {};
+      if (email) {
+        params.email = email;
+      }
+        if (username) {
+        params.username = username;
+        }
+
+      const usuarios = await Usuario.find(params);
       res.status(200).json(usuarios);
     } catch (error) {
       res.status(500).json({ error: 'Internal server error' });
