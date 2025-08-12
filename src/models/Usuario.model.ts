@@ -1,4 +1,5 @@
 import mongoose, {Schema} from 'mongoose';
+import {hash} from 'bcryptjs';
 
 class UsuarioError extends Error {}
 const UsuarioSchema = new Schema({  
@@ -27,7 +28,12 @@ class Usuario  {
         if (existingUsers.length > 0) {
             throw new UsuarioError('Username already exists');
         }
+
         try {
+            if (!usuario.username || !usuario.password || !usuario.email) {
+                throw new UsuarioError('Username, password and email are required');
+            }
+            usuario.password = await hash(usuario.password, 8);
             const createdUser = await UsuarioModel.create({
                 username: usuario.username,
                 password: usuario.password,
@@ -65,18 +71,19 @@ class Usuario  {
         })
     }
 
-    static async delete (username: string, email: string): Promise<boolean> {
+    static async delete (params: IUsuario): Promise<boolean> {
         try {
 
-            if (!username && !email) {
+
+            if (!params?.username && !params?.email) {
                 throw new UsuarioError('Username or email must be provided');
             }
 
-            if (email) {
-                const result = await UsuarioModel.deleteOne({ email });
+            if (params?.email) {
+                const result = await UsuarioModel.deleteOne({ email: params.email });
                 return result.deletedCount > 0;
             }else{
-                const result = await UsuarioModel.deleteOne({ username });
+                const result = await UsuarioModel.deleteOne({ username: params.username });
                 return result.deletedCount > 0;
             }
         } catch (error) {
@@ -97,7 +104,10 @@ class Usuario  {
                 updates.email = email;
             }
             const updatedUser = await UsuarioModel.findOneAndUpdate(
-                { username, email },
+                { 
+                    username, 
+                    email 
+                },
                 updates,
                 { new: true }
             );

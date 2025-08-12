@@ -1,11 +1,12 @@
 import 'dotenv/config';
 import express from 'express';
 import cors from 'cors';
-import mongoose from 'mongoose';
 import session from 'express-session';
 import MongoStore from 'connect-mongo';
 import flash from 'connect-flash';
 import router from './routes';
+import MongoConnection from './config/database';
+
 const app = express();
 
 app.use(express.json());
@@ -15,13 +16,10 @@ app.use(cors({
 }));
 
 
-const connectString = `${process.env.MONGO_URI}`
+const connectString = `${process.env.MONGO_URI}`;
 
-mongoose.connect(connectString).then(()=>{
-  console.log("Conexão ao mongoDB inicializada");   
-  app.emit('ready'); 
-}).catch((err) => {
-  console.error("Erro ao conectar ao mongoDB:", err);
+MongoConnection.getInstance().then(() => {
+  app.emit('ready');
 });
 
 
@@ -41,7 +39,8 @@ app.use(session({
 
 app.use(flash());
 
-app.use(router)
+app.use(router);
+
 
 
 export default app;
