@@ -17,11 +17,9 @@ app.use(cors({
   methods: ['GET', 'POST', 'PUT', 'DELETE'],
 }));
 
-
 MongoConnection.getInstance().then(() => {
   app.emit('ready');
 });
-
 
 app.use(session({
   secret: SECRET || 'defaultSecret',
