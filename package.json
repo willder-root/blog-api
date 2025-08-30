@@ -20,15 +20,21 @@
   "homepage": "https://github.com/willder-root/blog-api#readme",
   "description": "",
   "devDependencies": {
+    "@types/connect-flash": "^0.0.40",
     "@types/cors": "^2.8.19",
     "@types/express": "^5.0.3",
+    "@types/express-session": "^1.18.2",
     "ts-node-dev": "^2.0.0",
     "typescript": "^5.8.3"
   },
   "dependencies": {
+    "bcryptjs": "^3.0.2",
+    "connect-flash": "^0.1.1",
+    "connect-mongo": "^5.1.0",
     "cors": "^2.8.5",
     "dotenv": "^17.2.1",
     "express": "^5.1.0",
+    "express-session": "^1.18.2",
     "mongodb": "^6.18.0",
     "mongoose": "^8.16.5"
   }

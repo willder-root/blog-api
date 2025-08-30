@@ -1,7 +1,10 @@
 import app from './app';
+import { configEnv,ServerConfig } from './config/env'; 
 
-const PORT = process.env.PORT || 3000;
+const { PORT } = configEnv.get<ServerConfig>('SERVER');
 
-app.listen(PORT, () => {
-  console.log(`Servidor iniciado na porta ${PORT}`);
+app.on('ready', () => {
+  app.listen(PORT, () => {
+    console.log(`Servidor iniciado na porta ${PORT}`);
+  });
 });
