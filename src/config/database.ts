@@ -1,5 +1,5 @@
 import mongoose from 'mongoose';
-
+import { configEnv, MongoConfig } from './env';
 
 class MongoConnection {
     private static instance: mongoose.Mongoose;
@@ -7,7 +7,7 @@ class MongoConnection {
 
     private static async initialize(): Promise<void> {
         if (!MongoConnection.instance) {
-            const connectString = `${process.env.MONGO_URI}`;
+            const connectString = configEnv.get<MongoConfig>('MONGO').URI;
             this.instance = await mongoose.connect(connectString);
             console.log("Conexão ao MongoDB inicializada");
         }

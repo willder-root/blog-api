@@ -1,7 +1,7 @@
 import app from './app';
-import 'dotenv/config';
-const PORT = process.env.PORT || 3000;
+import { configEnv,ServerConfig } from './config/env'; 
 
+const { PORT } = configEnv.get<ServerConfig>('SERVER');
 
 app.on('ready', () => {
   app.listen(PORT, () => {

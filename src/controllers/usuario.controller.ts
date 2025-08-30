@@ -37,32 +37,32 @@ class UsuarioController {
     }
   }
 
-    static async deleteUsuario(req: Request, res: Response) {      
+  static async deleteUsuario(req: Request, res: Response) {      
 
-      try {
-          const { email, username } = req.query;
-          const params: any = {};
-          if (email) {
-            params.email = email;
-          }
-          
-          if (username) {
-            params.username = username;
-          }
-          const deleted = await Usuario.delete(params);
-          if (deleted) {
-              res.status(204).send();
-          } else {
-              res.status(404).json({ error: 'User not found' });
-          }
-      } catch (error) {
-          if (error instanceof UsuarioError) {
-              res.status(400).json({ error: error.message });
-          } else {
-              res.status(500).json({ error: 'Internal server error' });
-          }
-      }
+    try {
+        const { email, username } = req.query;
+        const params: any = {};
+        if (email) {
+          params.email = email;
+        }
+        
+        if (username) {
+          params.username = username;
+        }
+        const deleted = await Usuario.delete(params);
+        if (deleted) {
+            res.status(204).send();
+        } else {
+            res.status(404).json({ error: 'User not found' });
+        }
+    } catch (error) {
+        if (error instanceof UsuarioError) {
+            res.status(400).json({ error: error.message });
+        } else {
+            res.status(500).json({ error: 'Internal server error' });
+        }
     }
+  }
 }
 
 
